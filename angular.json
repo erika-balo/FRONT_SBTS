@@ -19,17 +19,24 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "aot": true,
+            "sourceMap": true, 
             "assets": [
               "src/favicon.ico",
-			  "src/assets",
-			  "src/.htaccess"
+              "src/assets",
+              "src/.htaccess"
             ],
             "styles": [
-			  "src/styles.css",
+			        "src/styles.css",
               "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.carousel.min.css",
               "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.theme.default.min.css",
-			  "src/assets/css/materialdesignicons.min.css",
-			  "node_modules/@fortawesome/fontawesome-free/css/all.min.css"
+			        "node_modules/@fortawesome/fontawesome-free/css/all.min.css"
+            ],
+            "allowedCommonJsDependencies": [
+              "ev-emitter",
+              "ngx-masonry",
+              "pdfmake",
+              "deepmerge",
+              "file-saver"
             ]
           },
           "configurations": {
@@ -92,8 +99,6 @@
             ],
             "styles": [
               "src/styles.css",
-              "src/assets/css/bootstrap.min.css",
-              "src/assets/css/materialdesignicons.min.css",
               "node_modules/slick-carousel/slick/slick.scss",
               "node_modules/slick-carousel/slick/slick-theme.scss"
             ],

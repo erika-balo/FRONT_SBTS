@@ -106,6 +106,7 @@ import { PageContactDetailComponent } from './core/components/lotes/page-contact
 import { SubastasVerPujasComponent } from './core/components/subastas/pujas/pujas.component';
 import { VerPujasComponent } from './core/components/pujas/pujas.component';
 import { TableroClienteComponent } from './core/components/tablero-cliente/tablero-cliente.component';
+import { TransmisionComponent } from './core/components/transmision/transmision.component';
 import { UsersCrearComponent } from './core/components/users/crear/crear.component';
 import { CerrarSubastaComponent } from './core/components/subastas/cerrar/cerrar.component';
 import { PageComponent } from './core/components/page/page.component';
@@ -134,11 +135,13 @@ import { RolesGuard } from './shared/guards/roles.guard';
 import { AgmCoreModule } from '@agm/core';
 import { NgxMaskModule, IConfig } from 'ngx-mask'
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
   slidesPerView: 'auto'
 };
+const config: SocketIoConfig = { url: 'http://localhost:5000', options: {} };
 
 @NgModule({
   declarations: [
@@ -196,6 +199,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
 	SubastasVerPujasComponent,
 	VerPujasComponent,
 	TableroClienteComponent,
+  TransmisionComponent,
 	UsersCrearComponent,
 	CerrarSubastaComponent,
 	PageComponent,
@@ -219,12 +223,14 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     ReactiveFormsModule,
     BrowserModule,
     BrowserAnimationsModule,
+    SocketIoModule.forRoot(config),
     AppRoutingModule,
     RouterModule,
     CarouselModule,
     FeatherModule.pick(allIcons),
     ScrollToModule.forRoot(),
-	RouterModule.forRoot([], { relativeLinkResolution: 'legacy', scrollPositionRestoration: 'enabled' }),
+	RouterModule.forRoot([], {  
+    scrollPositionRestoration: 'enabled'  }),
 	NgxMaskModule.forRoot(),
 	NgxYoutubePlayerModule,
     NgbModule,

@@ -53,6 +53,7 @@ import { HistorialEventosComponent } from './core/components/historial-eventos/h
 import { UrlSeguraComponent } from './core/components/lotes/url/urlsegura';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { RolesGuard } from './shared/guards/roles.guard';
+import { TransmisionComponent } from './core/components/transmision/transmision.component';
 
 const routes: Routes = [
   {
@@ -66,10 +67,14 @@ const routes: Routes = [
       { path: 'subastas/en-pista/:subastaId', component: SubastasEnPistaComponent },
       { path: 'tablero', component: TableroClienteComponent },
       { path: 'enlace/:slug', component: PageComponent },
-	{ path: 'lotes/page-contact-detail', component: PageContactDetailComponent },	
+	    { path: 'lotes/page-contact-detail', component: PageContactDetailComponent },	
       { path: 'historial-eventos', component: HistorialEventosComponent },
     ]
-  },  
+  }, 
+  {
+    path: 'admin2',
+    component: TransmisionComponent,
+  },
   {
     path: 'page',
     component: LayoutPageComponent,
@@ -146,7 +151,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'top', relativeLinkResolution: 'legacy' })],
+  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'top' })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

@@ -44,6 +44,10 @@ export class PageContactDetailComponent implements OnInit {
 	viewerOpen: boolean[];
 	subastaDetalles: any[];
 	private _unsubscribeAll: Subject<any>;
+
+	sessionName = 'mi_sesion_zoom';
+	userName = 'Usuario Angular';
+	token = 'TU_TOKEN_GENERADO_EN_ZOOM';
 	
 	constructor(
         private activatedRoute: ActivatedRoute,
@@ -58,7 +62,7 @@ export class PageContactDetailComponent implements OnInit {
                 private chdr: ChangeDetectorRef,
                 private router: Router,
                 private configGeneralesService: ConfigGeneralesService,
-                private sanitizer: DomSanitizer
+                private sanitizer: DomSanitizer,
         ) {
         }
 		ngOnInit(): void {
@@ -192,6 +196,7 @@ loadDetalles(): void {
 			console.log(err);
 	});
 }
+
 
 loadConfigs(): void {
 	this.configGeneralesService.getAll().subscribe(response => {

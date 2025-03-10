@@ -5,9 +5,6 @@ import { ConfirmacionComponent } from 'app/core/components/generales/confirmacio
 import { SubastasDetallesService, SubastasService, ToastService } from 'app/services';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'app/../environments/environment';
-import pdfMake from 'pdfmake/build/pdfmake';
-import pdfFonts from 'pdfmake/build/vfs_fonts';
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
     selector: 'app-subasta-pujas',
@@ -198,7 +195,7 @@ export class SubastasVerPujasComponent implements OnInit {
                 }
 
                 }
-                pdfMake.createPdf(data).download(`pujaFinal-lote_${numerolote}.pdf`);
+                // pdfMake.createPdf(data).download(`pujaFinal-lote_${numerolote}.pdf`);ks
 		
         },
                 err => {

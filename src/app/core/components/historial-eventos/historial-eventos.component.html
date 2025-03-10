@@ -1,24 +1,5 @@
-<!-- TODOS LOS LOTES -->
-<section class="section" style="margin-top: 100px">
-	<div class="container">
-		<table class="table">
-			<thead>
-				<tr>
-					<th>Nombre del Evento</th>
-					<th>Descripción del Evento</th>
-					<th>Fecha de Inicio</th>
-					<th>Fecha Fin</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr (click)="changeEvento(evento)" class="pointer" *ngFor="let evento of eventos">							
-					<td>{{ evento.nombre }}</td>
-					<td>{{ evento.descripcion }}</td>
-					<td>{{ evento.fechaInicio | date: 'yyyy-MM-dd HH:mm' }}</td>
-					<td>{{ evento.fechaFin | date: 'yyyy-MM-dd HH:mm' }}</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-</section>
-<!-- Hero End -->
+<div>
+	<h1>Host</h1>
+	<video id="host-video" autoplay muted></video>
+	<button (click)="startStream()">Iniciar Transmisión</button>
+  </div>

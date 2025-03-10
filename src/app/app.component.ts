@@ -13,6 +13,7 @@ export class AppComponent {
     /**
      * Unicons icon refreshed on route change.
      */
+    debugger
     router.events.forEach((event) => {
       if (event instanceof NavigationEnd) {
 		  if (window['Unicons']) {

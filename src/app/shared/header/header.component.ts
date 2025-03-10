@@ -232,10 +232,10 @@ export class HeaderComponent implements OnInit {
                         const data = response.body;
                         if (data === null) {
                               const modalRef = this.modalService.open(ConfirmacionComponent);
-			modalRef.componentInstance.texto = 'En este momento no se encuentra un lote en pista';
+                              modalRef.componentInstance.texto = 'En este momento no se encuentra un lote en pista';
                         }else{
-				this.router.navigate(['/lotes/page-contact-detail/']);
-			}
+                          this.router.navigate(['/lotes/page-contact-detail/']);
+                        }
                 },
                 err => {
                         console.log(err);
