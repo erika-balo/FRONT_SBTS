@@ -1,8 +1,8 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 
-import { EventosService, LotesService, SlidersService, BannersService, StreamingService } from 'app/services';
+import { EventosService, LotesService, SlidersService, BannersService } from 'app/services';
 
 import { Store, select } from '@ngrx/store';
 import { AppState, Login, currentUser } from 'app/store';
@@ -14,8 +14,6 @@ import * as moment from 'moment';
 import * as _ from 'lodash';
 
 import { environment } from 'app/../environments/environment';
-import { io } from 'socket.io-client';
-import Peer from 'peerjs';
 
 @Component({
     selector: 'app-index',
@@ -25,7 +23,6 @@ import Peer from 'peerjs';
 export class IndexComponent implements OnInit, OnDestroy {
 
 	resourceUrl = environment.URL_IMAGENES;
-	videoElement!: HTMLVideoElement;
 
     data: any;
 	lotes: any[];
@@ -45,10 +42,6 @@ export class IndexComponent implements OnInit, OnDestroy {
 	user: any;
 
     private _unsubscribeAll: Subject<any>;
-	private peer: Peer;
-	private stream: MediaStream | null = null;
-
-	inStreaming: boolean = false;
 
     constructor(
         private lotesService: LotesService,
@@ -59,96 +52,57 @@ export class IndexComponent implements OnInit, OnDestroy {
 		private bannersService: BannersService,
 		private cdr: ChangeDetectorRef,
 		private eventosService: EventosService,
-		private activatedRoute: ActivatedRoute,
-		private socketService: StreamingService
+		private activatedRoute: ActivatedRoute
     ) {
-		this.peer = new Peer({
-			host: '192.168.1.2', // Dirección del servidor de señalización
-			port: 9000, // Puerto del servidor de señalización
-			path: '/myapp', // Ruta del servidor de señalización
-		  }); // Inicializar PeerJS
-
-		this.peer.on('error', (error) => {
-		  console.error('Error en PeerJS (espectador):', error);
-		});
     }
 
-    async ngOnInit(): Promise<void> {
-		this.socketService.onStreamStarted((data: any) => {
-			console.log('Transmisión iniciada por el host:', data.peerId);
-			this.connectToHost(data.peerId);
-		  });
+    ngOnInit(): void {
+        this._unsubscribeAll = new Subject();
 
-		this.socketService.onStreamInProcess((data: any) => {
-			console.log('Transmisión en proceso por el host:', data.id);
-			this.connectToHost(data.id);
-		  });
+		this.timers = [];
+		this.lotes = [];
+        this.images = [
+        ];
 
-		  this.socketService.onStreamStopped((data: any) => {
-			console.log('Transmisión detenida por el host:');
-			this.inStreaming = false;
-			this.videoElement.srcObject = null;
-		  });
-		
-        // this._unsubscribeAll = new Subject();
-		// this.timers = [];
-		// this.lotes = [];
-        // this.images = [
-        // ];
+        this.page = 1;
+        this.limit = 5;
 
-        // this.page = 1;
-        // this.limit = 5;
+		this.loadSliders();
+		this.loadBanners();
 
-		// this.loadSliders();
-		// this.loadBanners();
+		this.store.pipe(
+			takeUntil(this._unsubscribeAll),
+			select(currentUser),
+			filter(user => user)
+		).subscribe(user => {
+			this.user = user;
+		});
 
-		// this.store.pipe(
-		// 	takeUntil(this._unsubscribeAll),
-		// 	select(currentUser),
-		// 	filter(user => user)
-		// ).subscribe(user => {
-		// 	this.user = user;
-		// });
-
-		// this.activatedRoute.queryParams.subscribe(params => {
-		// 	this.lotes = [];
-		// 	this.timers = [];
-		// 	if (params.tipo) {
-		// 		this.tipo = params.tipo;
-		// 		switch (this.tipo) {
-		// 			case 'past':
-		// 				this.loadEventosPast();
-		// 				break;
-		// 			case 'future':
-		// 				this.loadEventosFuture();
-		// 				break;
-		// 		}
-		// 	} else {
-		// 		if (params.eventoId) {
-		// 			this.eventoSeleccionado = params.eventoId;
-		// 			this.load();
-		// 		} else {
-		// 			this.tipo = 'current';
-		// 			this.loadEventosFuture();
-		// 		}
-		// 	}
-		// });
+		this.activatedRoute.queryParams.subscribe(params => {
+			this.lotes = [];
+			this.timers = [];
+			if (params.tipo) {
+				this.tipo = params.tipo;
+				switch (this.tipo) {
+					case 'past':
+						this.loadEventosPast();
+						break;
+					case 'future':
+						this.loadEventosFuture();
+						break;
+				}
+			} else {
+				if (params.eventoId) {
+					this.eventoSeleccionado = params.eventoId;
+					this.load();
+				} else {
+					this.tipo = 'current';
+					this.loadEventosFuture();
+				}
+			}
+		});
 	}
 
-	async connectToHost(hostPeerId: string) {
-		const stm2 = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-		const call = this.peer.call(hostPeerId, stm2); // No necesitas pasar `this.stream`\
-		  call.on('stream', (remoteStream) => {
-			console.log('Recibiendo stream del host...');
-			this.inStreaming = true;
-			const videoElement = document.getElementById('viewer-video') as HTMLVideoElement;
-			videoElement.srcObject = remoteStream;
-		  });
-	
-		  call.on('error', (error) => {
-			console.error('Error en la llamada:', error);
-		  });
-	  }
 	loadEventosPast(): void {
 		const now = moment().format('YYYY-MM-DD') + ' 00:00:00';
 		this.eventosService.findPast(now).subscribe(response => {
@@ -310,9 +264,9 @@ export class IndexComponent implements OnInit, OnDestroy {
         this.load();
     }
 
-    sanitizeImagen(imagen: any): any {
-        return this.domSanitizer.bypassSecurityTrustResourceUrl('data:' + imagen.fotoPortadaContentType + ';base64,' + imagen.fotoPortada);
-	}
+    // sanitizeImagen(imagen: any): any {
+    //     return this.domSanitizer.bypassSecurityTrustRessourceUrl('data:' + imagen.fotoPortadaContentType + ';base64,' + imagen.fotoPortada);
+	// }
 	
 	onScroll(): void {
 		this.page = this.page + 1;

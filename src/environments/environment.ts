@@ -4,7 +4,7 @@
 
 export const environment = {
     production: false,
-    API_URL: 'https://api.digitalganadera.com/',
+    API_URL: 'https://api.digitalganadera.com',
     MERCURE_URL: 'http://localhost:9000/.well-known/mercure',
     URL_IMAGENES: 'http://localhost',
 };
