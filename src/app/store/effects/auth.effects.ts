@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Store, select } from '@ngrx/store';
-import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { AppState } from 'app/store/app.states';
 import { AuthActionTypes, Login, UserRequested, UserLoaded } from 'app/store/actions/auth.actions';
 import { isUserLoaded } from 'app/store/selectors/auth.selector';
@@ -19,28 +19,30 @@ export class AuthEffects {
         private router: Router,
         private store: Store<AppState>,
         private usersService: UsersService
-    ) {
-    }
+    ) {}
 
-    @Effect({dispatch: false})
-    login$ = this.actions.pipe(
-        ofType<Login>(AuthActionTypes.Login),
-        tap(action => {
-            localStorage.setItem('access_token', action.payload.token);
-            this.store.dispatch(new UserRequested());
-        }),
+    // Usamos createEffect en lugar de @Effect
+    login$ = createEffect(() =>
+        this.actions.pipe(
+            ofType<Login>(AuthActionTypes.Login),
+            tap(action => {
+                localStorage.setItem('access_token', action.payload.token);
+                this.store.dispatch(new UserRequested());
+            })
+        ),
+        { dispatch: false } // No despachamos nuevas acciones en este efecto
     );
 
-    @Effect({dispatch: false})
-    loadUser$ = this.actions
-    .pipe(
-        ofType<UserRequested>(AuthActionTypes.UserRequested),
-        withLatestFrom(this.store.pipe(select(isUserLoaded))),
-        mergeMap(([action, _isUserLoaded]) => this.usersService.me()),
-        tap(response => {
-			const _user = response.body;
-            this.store.dispatch(new UserLoaded({ user: _user }));
-        })
+    loadUser$ = createEffect(() =>
+        this.actions.pipe(
+            ofType<UserRequested>(AuthActionTypes.UserRequested),
+            withLatestFrom(this.store.pipe(select(isUserLoaded))),
+            mergeMap(([action, _isUserLoaded]) => this.usersService.me()),
+            tap(response => {
+                const _user = response.body;
+                this.store.dispatch(new UserLoaded({ user: _user }));
+            })
+        ),
+        { dispatch: false } // No despachamos nuevas acciones en este efecto
     );
-
 }

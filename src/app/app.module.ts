@@ -41,25 +41,25 @@ import { metaReducers, reducers } from './store';
 
 import { AuthEffects, authReducer } from 'app/store';
 
-import { 
-    ConfigDocumentosRegistroService,
-    ConfigFormRegistroService,
-    UsersService,
-    AuthService,
-    RanchosService,
-    EventosService,
-    LotesService,
-    SubastasService,
-    SubastasDetallesService,
-    ToastService,
-    ConfigGeneralesService,
-    UsersPagosService,
-    UsersDevolucionesService,
-    PaisesService,
-	EstadosService,
-	SlidersService,
-	PagesService,
-	BannersService
+import {
+  ConfigDocumentosRegistroService,
+  ConfigFormRegistroService,
+  UsersService,
+  AuthService,
+  RanchosService,
+  EventosService,
+  LotesService,
+  SubastasService,
+  SubastasDetallesService,
+  ToastService,
+  ConfigGeneralesService,
+  UsersPagosService,
+  UsersDevolucionesService,
+  PaisesService,
+  EstadosService,
+  SlidersService,
+  PagesService,
+  BannersService
 } from './services';
 
 import { allIcons, User } from 'angular-feather/icons';
@@ -188,30 +188,30 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     UsersPagosCrearComponent,
     UsersDevolucionesComponent,
     UsersDevolucionCrearComponent,
-	UsersEditarComponent,
-	VerLoteComponent,
-	VerRanchoComponent,
-	VerEventoComponent,
-	PageContactDetailComponent,
-	SubastasVerPujasComponent,
-	VerPujasComponent,
-	TableroClienteComponent,
-	UsersCrearComponent,
-	CerrarSubastaComponent,
-	PageComponent,
-	SlidersComponent,
-	SlidersCrearComponent,
-	AuthRePasswordFinishComponent,
-	PagesComponent,
-	PagesCrearComponent,
-	BannersComponent,
-	BannersCrearComponent,
-	HistorialEventosComponent
+    UsersEditarComponent,
+    VerLoteComponent,
+    VerRanchoComponent,
+    VerEventoComponent,
+    PageContactDetailComponent,
+    SubastasVerPujasComponent,
+    VerPujasComponent,
+    TableroClienteComponent,
+    UsersCrearComponent,
+    CerrarSubastaComponent,
+    PageComponent,
+    SlidersComponent,
+    SlidersCrearComponent,
+    AuthRePasswordFinishComponent,
+    PagesComponent,
+    PagesCrearComponent,
+    BannersComponent,
+    BannersCrearComponent,
+    HistorialEventosComponent
   ],
   entryComponents: [
     GanadoraComponent,
     ConfirmacionComponent,
-	CerrarSubastaComponent,
+    CerrarSubastaComponent,
   ],
   imports: [
     CommonModule,
@@ -224,9 +224,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     CarouselModule,
     FeatherModule.pick(allIcons),
     ScrollToModule.forRoot(),
-	RouterModule.forRoot([], { relativeLinkResolution: 'legacy', scrollPositionRestoration: 'enabled' }),
-	NgxMaskModule.forRoot(),
-	NgxYoutubePlayerModule,
+    NgxMaskModule.forRoot(),
+    NgxYoutubePlayerModule,
     NgbModule,
     NgbNavModule,
     FormsModule,
@@ -236,12 +235,12 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     CountToModule,
     NgxMasonryModule,
     NgxFileDropModule,
-	AngularEditorModule,
-	InfiniteScrollModule,
+    AngularEditorModule,
+    InfiniteScrollModule,
 
-    StoreModule.forRoot(reducers, {metaReducers}),
+    StoreModule.forRoot(reducers, { metaReducers }),
     EffectsModule.forRoot([]),
-    StoreRouterConnectingModule.forRoot({stateKey: 'router'}),
+    StoreRouterConnectingModule.forRoot({ stateKey: 'router' }),
     StoreDevtoolsModule.instrument(),
 
     StoreModule.forFeature('auth', authReducer),
@@ -265,15 +264,15 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
       useValue: DEFAULT_SWIPER_CONFIG
     },
     {
-        provide: HTTP_INTERCEPTORS,
-        useClass: TokenInterceptor,
-        multi: true
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
     },
     {
-        provide: NgbDateAdapter,
-        useClass: NgbDateMomentAdapter
+      provide: NgbDateAdapter,
+      useClass: NgbDateMomentAdapter
     },
-    
+
     ConfigDocumentosRegistroService,
     UsersService,
     AuthService,
@@ -290,10 +289,10 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     UsersPagosService,
     UsersDevolucionesService,
     PaisesService,
-	EstadosService,
-	SlidersService,
-	PagesService,
-	BannersService
+    EstadosService,
+    SlidersService,
+    PagesService,
+    BannersService
   ],
   bootstrap: [AppComponent],
 
