@@ -1,4 +1,16 @@
 <div>
 	<h1>Espectador</h1>
-	<video id="viewer-video" autoplay></video>
+	<div *ngIf="inStreaming" class="live-indicator">
+		<p class="lead">
+			🔴 <em><strong>En vivo</strong></em>
+		</p>
+		<video id="viewer-video" autoplay></video>
+
+	</div>
+	<div *ngIf="!inStreaming" class="down-indicator lead">
+		<p class="lead">
+			⚪<em><strong> En espera</strong></em>
+		</p>
+	</div>
+
   </div>

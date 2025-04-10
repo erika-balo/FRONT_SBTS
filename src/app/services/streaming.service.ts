@@ -18,6 +18,14 @@ export class StreamingService {
     this.socket.on('stream-started', callback);
   }
 
+  onStreamStopped(callback: (streamData: any) => void) {
+    this.socket.on('stream-stopped', callback);
+  }
+
+  onStreamInProcess(callback: (streamData: any) => void) {
+    this.socket.on('in_streaming', callback);
+  }
+
   // Emitir evento para iniciar la transmisión
   startStream(streamData: any) {
     this.socket.emit('start-stream', streamData);
@@ -26,6 +34,8 @@ export class StreamingService {
   
   // Emitir evento para iniciar la transmisión
   stopStream(streamData: any) {
-    this.socket.emit('start-stream', streamData);
+    this.socket.emit('stop-streaming', streamData);
   }
+
+  
 }

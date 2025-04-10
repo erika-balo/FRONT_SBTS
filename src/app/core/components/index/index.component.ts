@@ -48,6 +48,8 @@ export class IndexComponent implements OnInit, OnDestroy {
 	private peer: Peer;
 	private stream: MediaStream | null = null;
 
+	inStreaming: boolean = false;
+
     constructor(
         private lotesService: LotesService,
         private domSanitizer: DomSanitizer,
@@ -76,6 +78,18 @@ export class IndexComponent implements OnInit, OnDestroy {
 			console.log('Transmisión iniciada por el host:', data.peerId);
 			this.connectToHost(data.peerId);
 		  });
+
+		this.socketService.onStreamInProcess((data: any) => {
+			console.log('Transmisión en proceso por el host:', data.id);
+			this.connectToHost(data.id);
+		  });
+
+		  this.socketService.onStreamStopped((data: any) => {
+			console.log('Transmisión detenida por el host:');
+			this.inStreaming = false;
+			this.videoElement.srcObject = null;
+		  });
+		
         // this._unsubscribeAll = new Subject();
 		// this.timers = [];
 		// this.lotes = [];
@@ -126,7 +140,7 @@ export class IndexComponent implements OnInit, OnDestroy {
 		const call = this.peer.call(hostPeerId, stm2); // No necesitas pasar `this.stream`\
 		  call.on('stream', (remoteStream) => {
 			console.log('Recibiendo stream del host...');
-			
+			this.inStreaming = true;
 			const videoElement = document.getElementById('viewer-video') as HTMLVideoElement;
 			videoElement.srcObject = remoteStream;
 		  });
