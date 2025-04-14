@@ -5,12 +5,16 @@
     <div>
       <a class="logo" routerLink="/" *ngIf="navClass !== 'nav-light'">
 
-        <img src="https://subastabucket.s3.us-east-2.amazonaws.com/Varios/logo+web+cuarto.png" class="l-dark" height="60"  alt="">
-        <img src="https://subastabucket.s3.us-east-2.amazonaws.com/Varios/logo+web+cuarto.png" class="l-light" height="60" alt="">
+        <img src="https://subastabucket.s3.us-east-2.amazonaws.com/Varios/logo+web+cuarto.png" class="l-dark"
+          height="60" alt="">
+        <img src="https://subastabucket.s3.us-east-2.amazonaws.com/Varios/logo+web+cuarto.png" class="l-light"
+          height="60" alt="">
       </a>
       <a class="logo" routerLink="/" *ngIf="navClass === 'nav-light'">
-        <img src="https://subastabucket.s3.us-east-2.amazonaws.com/Varios/logo+web+cuarto.png" class="l-dark" height="58" alt="">
-        <img src="https://subastabucket.s3.us-east-2.amazonaws.com/Varios/logo+web+cuarto.png" class="l-light" height="58" alt="">
+        <img src="https://subastabucket.s3.us-east-2.amazonaws.com/Varios/logo+web+cuarto.png" class="l-dark"
+          height="58" alt="">
+        <img src="https://subastabucket.s3.us-east-2.amazonaws.com/Varios/logo+web+cuarto.png" class="l-light"
+          height="58" alt="">
       </a>
     </div>
     <!-- <div class="buy-button">
@@ -48,15 +52,16 @@
         <!--BARRA DE BÚSQUEDA!-->
         <li>
           <form class="form-inline navbar-light my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Búsqueda" aria-label="Search" style="width: 150px;">
+            <input class="form-control mr-sm-2" type="search" placeholder="Búsqueda" aria-label="Search"
+              style="width: 150px;">
             <button class="btn btn-primary" type="submit">Buscar</button>
           </form>
         </li>
-		<li><a routerLink="/" *ngIf="isUser" (click)="onMenuClick($event)">En Subasta</a></li>
-		<li><a target="_blank" href="https://www.facebook.com/unionganaderaregionaldechihuahua">Catálogo</a></li>
-		<li><a routerLink="/page/lotes/page-contact-detail">Transmisión</a></li>
-		<li><a routerLink="/page/pujas" *ngIf="isAdmin">Pujas</a></li>
-		<li><a routerLink="/tablero" *ngIf="isUser">Mis Pujas</a></li>
+        <li><a routerLink="/" *ngIf="isUser" (click)="onMenuClick($event)">En Subasta</a></li>
+        <li><a target="_blank" href="https://www.facebook.com/unionganaderaregionaldechihuahua">Catálogo</a></li>
+        <li><a routerLink="/page/lotes/page-contact-detail">Transmisión</a></li>
+        <li><a routerLink="/page/pujas" *ngIf="isAdmin">Pujas</a></li>
+        <li><a routerLink="/tablero" *ngIf="isUser">Mis Pujas</a></li>
         <li class="has-submenu" *ngIf="isAdmin">
           <a href="javascript:void(0)" (click)="onMenuClick($event)">Cátalogos</a><span class="menu-arrow"></span>
           <ul class="submenu">
@@ -64,18 +69,23 @@
             <li><a routerLink="/page/ranchos" class="nav-link-ref">Ranchos</a></li>
             <li><a routerLink="/page/eventos" class="nav-link-ref">Eventos</a></li>
             <li><a routerLink="/page/lotes" class="nav-link-ref">Lotes</a></li>
-			<li><a routerLink="/page/subastas" class="nav-link-ref">Subastas</a></li>
+            <li><a routerLink="/page/subastas" class="nav-link-ref">Subastas</a></li>
           </ul>
         </li>
         <li class="has-submenu" *ngIf="isAdmin">
           <a href="javascript:void(0)" (click)="onMenuClick($event)">Configuraciones</a><span class="menu-arrow"></span>
           <ul class="submenu">
-            <li><a routerLink="/page/configuraciones-documentos" *ngIf="isAdmin" class="nav-link-ref">Config. Documentos</a></li>
-            <li><a routerLink="/page/configuraciones-form-registro" *ngIf="isAdmin" class="nav-link-ref">Config. Form Registro</a></li>
-            <li><a routerLink="/page/configuraciones-generales" *ngIf="isAdmin" class="nav-link-ref">Config. Generales</a></li>
-            <li><a routerLink="/page/configuraciones-sliders" *ngIf="isAdmin" class="nav-link-ref">Config. Sliders</a></li>
-			<li><a routerLink="/page/pages" class="nav-link-ref">Config. Enlaces</a></li>
-			<li><a routerLink="/page/banners" class="nav-link-ref">Config. Banners</a></li>
+            <li><a routerLink="/page/configuraciones-documentos" *ngIf="isAdmin" class="nav-link-ref">Config.
+                Documentos</a></li>
+            <li><a routerLink="/page/configuraciones-form-registro" *ngIf="isAdmin" class="nav-link-ref">Config. Form
+                Registro</a></li>
+            <li><a routerLink="/page/configuraciones-generales" *ngIf="isAdmin" class="nav-link-ref">Config.
+                Generales</a></li>
+            <li><a routerLink="/page/configuraciones-sliders" *ngIf="isAdmin" class="nav-link-ref">Config. Sliders</a>
+            </li>
+            <li><a routerLink="/page/pages" class="nav-link-ref">Config. Enlaces</a></li>
+            <li><a routerLink="/page/banners" class="nav-link-ref">Config. Banners</a></li>
+            <li><a routerLink="/page/streaming" class="nav-link-ref">Transmision</a></li>
           </ul>
         </li>
         <li><a href='#' (click)="cerrarSesion()" class="nav-link-ref">Cerrar Sesión</a></li>

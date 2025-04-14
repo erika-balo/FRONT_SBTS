@@ -16,3 +16,4 @@ export * from './estados.service';
 export * from './sliders.service';
 export * from './pages.service';
 export * from './banners.service';
+export * from './streaming.service';

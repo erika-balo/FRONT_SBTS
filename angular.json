@@ -53,7 +53,7 @@
               ],
               "optimization": true,
               "outputHashing": "all",
-              "sourceMap": false,
+              "sourceMap": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -70,13 +70,16 @@
                   "maximumWarning": "1mb"
                 }
               ]
+            },
+            "development": {
+              "sourceMap": true
             }
           }
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "landrick-angular:build"
+            "browserTarget": "landrick-angular:build:development"
           },
           "configurations": {
             "production": {

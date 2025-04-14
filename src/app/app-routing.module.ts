@@ -49,6 +49,7 @@ import { PagesComponent } from './core/components/pages/pages.component';
 import { PagesCrearComponent } from './core/components/pages/crear/crear.component';
 import { BannersComponent } from './core/components/banners/banners.component';
 import { BannersCrearComponent } from './core/components/banners/crear/crear.component';
+import { StreamingComponent } from './core/components/streaming/streaming.component';
 import { HistorialEventosComponent } from './core/components/historial-eventos/historial-eventos.component';
 import { UrlSeguraComponent } from './core/components/lotes/url/urlsegura';
 import { AuthGuard } from './shared/guards/auth.guard';
@@ -66,15 +67,15 @@ const routes: Routes = [
       { path: 'subastas/en-pista/:subastaId', component: SubastasEnPistaComponent },
       { path: 'tablero', component: TableroClienteComponent },
       { path: 'enlace/:slug', component: PageComponent },
-	{ path: 'lotes/page-contact-detail', component: PageContactDetailComponent },	
+      { path: 'lotes/page-contact-detail', component: PageContactDetailComponent },
       { path: 'historial-eventos', component: HistorialEventosComponent },
     ]
-  },  
+  },
   {
     path: 'page',
     component: LayoutPageComponent,
-	canActivate: [AuthGuard, RolesGuard],
-	data: {roles: ['ROLE_ADMIN', 'ROLE_SUBASTA']},
+    canActivate: [AuthGuard, RolesGuard],
+    data: { roles: ['ROLE_ADMIN', 'ROLE_SUBASTA'] },
     children: [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'ranchos', component: RanchosComponent },
@@ -118,26 +119,27 @@ const routes: Routes = [
       { path: 'pages/editar/:id', component: PagesCrearComponent },
       { path: 'banners', component: BannersComponent },
       { path: 'banners/editar/:id', component: BannersCrearComponent },
-	{ path: 'lotes/url/urlsegura', component: UrlSeguraComponent }
+      { path: 'streaming', component: StreamingComponent },
+      { path: 'lotes/url/urlsegura', component: UrlSeguraComponent }
     ]
-  },  
+  },
   {
     path: 'subastador',
     component: LayoutPageComponent,
-	canActivate: [AuthGuard, RolesGuard],
-	data: {roles: ['ROLE_SUBASTA']},
+    canActivate: [AuthGuard, RolesGuard],
+    data: { roles: ['ROLE_SUBASTA'] },
     children: [
       { path: 'subastas/en-pista-subastador/:subastaId', component: SubastasEnPistaSubastadorComponent },
     ]
-  },  
+  },
   {
     path: 'user',
     component: LayoutPageComponent,
-	canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     children: [
-    //   { path: 'subastas/en-pista/:subastaId', component: SubastasEnPistaComponent },
+      //   { path: 'subastas/en-pista/:subastaId', component: SubastasEnPistaComponent },
     ]
-  },  
+  },
   { path: 'auth-signup', component: AuthSignupComponent },
   { path: 'auth-login', component: AuthLoginComponent },
   { path: 'auth-re-password', component: AuthRePasswordComponent },

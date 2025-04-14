@@ -1,0 +1,31 @@
+<div class="container text-center mt-4">
+    <h1>Inciar stream</h1>
+    <div class="mb-3">
+        <label for="camera-select" class="form-label">Selecciona una cámara:</label>
+        <select [disabled]="isStreaming" id="camera-select" class="form-select" (change)="onCameraChange($event)"
+            [(ngModel)]="selectedCamera">
+            <option value="" disabled selected>Seleccione una cámara</option>
+            <option *ngFor="let device of videoDevices" [value]="device.deviceId">
+                {{ device.label || 'Cámara ' + device.deviceId }}
+            </option>
+        </select>
+    </div>
+    <button class="btn btn-primary mt-1 mr-5" (click)="startStream()"
+        [disabled]="!selectedCamera || isStreaming">Iniciar Transmisión</button>
+    <button class="btn btn-danger mt-1" (click)="stopStream()" [disabled]="!isStreaming">Detener Transmisión</button>
+    <br>
+    <div class="resizable-container mt-5">
+    <div *ngIf="isStreaming" class="live-indicator">
+        <p class="lead">
+            🔴 <em><strong>En vivo</strong></em>
+        </p>
+    </div>
+    <div *ngIf="!isStreaming" class="down-indicator lead">
+        <p class="lead">
+            ⚪<em><strong> En espera</strong></em>
+        </p>
+    </div>
+        <video id="host-video" autoplay muted class="video-stream"></video>
+        <div class="resize-handle"></div>
+      </div>
+</div>

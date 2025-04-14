@@ -88,6 +88,7 @@ import { GanadoraComponent } from './core/components/subastas/ganadora/ganadora.
 import { UsersComponent } from './core/components/users/users.component';
 import { UsersVerComponent } from './core/components/users/ver/ver.component';
 import { VerLoteLandingComponent } from './core/components/lotes/ver-landing/ver-landing.component';
+import { StreamingComponent } from './core/components/streaming/streaming.component';
 import { ConfiguracionesDocumentosComponent } from './core/components/configuraciones-documentos/configuraciones-documentos.component';
 import { ConfiguracionesDocumentosCrearComponent } from './core/components/configuraciones-documentos/crear/crear.component';
 import { ConfiguracionesFormRegistroComponent } from './core/components/configuraciones-form-registro/configuraciones-form-registro.component';
@@ -134,6 +135,9 @@ import { RolesGuard } from './shared/guards/roles.guard';
 import { AgmCoreModule } from '@agm/core';
 import { NgxMaskModule, IConfig } from 'ngx-mask'
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+
+const config: SocketIoConfig = { url: 'http://localhost:5000', options: {} };
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
@@ -199,6 +203,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     UsersCrearComponent,
     CerrarSubastaComponent,
     PageComponent,
+    StreamingComponent,
     SlidersComponent,
     SlidersCrearComponent,
     AuthRePasswordFinishComponent,
@@ -225,6 +230,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     FeatherModule.pick(allIcons),
     ScrollToModule.forRoot(),
     NgxMaskModule.forRoot(),
+    SocketIoModule.forRoot(config),
     NgxYoutubePlayerModule,
     NgbModule,
     NgbNavModule,

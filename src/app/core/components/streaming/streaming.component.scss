@@ -1,0 +1,59 @@
+.form-select {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  .btn {
+    margin-top: 10px;
+  }
+  
+  .down-indicator {
+    position: absolute;
+    right: 20px;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-top: 10px;
+  }
+  
+  .live-indicator {
+    position: absolute;
+    right: 20px;
+    color: red;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-top: 10px;
+    animation: blink 1.5s infinite ease-in-out;
+  }
+  
+  @keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+  }
+  
+  .resizable-container {
+    display: inline-block;
+    position: relative;
+    max-width: 100%;
+    resize: both;
+    overflow: hidden;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+  }
+  
+  .video-stream {
+    min-width: 100%;
+    height: auto;
+  }
+  
+  .resize-handle {
+    width: 15px;
+    height: 15px;
+    background: #ccc;
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    cursor: nwse-resize;
+    border-radius: 50%;
+  }
