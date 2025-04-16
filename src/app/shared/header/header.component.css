@@ -1,6 +1,6 @@
 .btn-outline-success {
-	color: #403e30;
-	border-color: #403e30;
+	color: #ab0433;
+	border-color: #ab0433;
 }
 .cursor{
 	cursor: pointer;
@@ -12,14 +12,14 @@
 	box-shadow: 0 3px 5px 0 rgba(47, 85, 212, 0.3);*/
 
 	color: rgb(243, 243, 243);
-	border-color: #403e30;
-	background-color: #403e30;
+	border-color: #ab0433;
+	background-color: #ab0433;
 	box-shadow:white;
 }
 
 .btn-primary {
-	border-color: #403e30 !important;
-	background-color: #403e30 !important;
+	border-color: #ab0433 !important;
+	background-color: #ab0433 !important;
 	box-shadow: none !important;
   }
 
