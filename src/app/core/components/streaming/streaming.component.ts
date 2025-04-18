@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { StreamingService } from "app/services";
 import { environment } from "environments/environment";
 import Peer from "peerjs";
+import { UsersService } from '../../../services/users.service';
 
 @Component({
     selector: 'app-streaming',
@@ -20,7 +21,8 @@ export class StreamingComponent implements OnInit {
     public isStreaming: boolean = false;
 
     constructor(
-        private socketService: StreamingService
+        // private socketService: StreamingService,
+        public UsersService: UsersService
     ) { 
             this.peer = new Peer({
                 host: 'streaming.digitalganadera.com', // Dirección del servidor de señalización
@@ -114,7 +116,11 @@ export class StreamingComponent implements OnInit {
             // }
     
             this.isStreaming = true;
-            this.socketService.startStream({ peerId: this.peer.id });
+            this.UsersService.mercureAdvice('transmition', this.peer.id).subscribe((res) => {
+                console.log(res);
+            }
+            );
+            // this.socketService.startStream({ peerId: this.peer.id });
         } catch (error) {
             console.error('Error al acceder a la cámara:', error);
         }
@@ -132,10 +138,10 @@ export class StreamingComponent implements OnInit {
         this.isStreaming = false;
     
         // Detener la transmisión en el servidor (si es necesario)
-        if (this.socketService) {
-            this.socketService.stopStream({ peerId: this.peer.id });
-            console.log('Transmisión detenida en el servidor');
-        }
+        // if (this.socketService) {
+        //     this.socketService.stopStream({ peerId: this.peer.id });
+        //     console.log('Transmisión detenida en el servidor');
+        // }
     }
 
 }

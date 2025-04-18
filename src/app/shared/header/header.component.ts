@@ -22,6 +22,8 @@ export class HeaderComponent implements OnInit {
 	linkCatalogo: string;
 	linkTutoriales: string;
 
+  isProduction: boolean;
+
 	private _unsubscribeAll: Subject<any>;
 
 	busquedaForm: FormGroup;
@@ -59,6 +61,9 @@ export class HeaderComponent implements OnInit {
 		filter(user => user)
 	).subscribe(user => {
 		this.user = user;
+    console.log(user);
+    this.isProduction = user.roles.indexOf('ROLE_PRODUCTION') >= 0;
+    
 	});
 
         this.busquedaForm = this._fb.group({

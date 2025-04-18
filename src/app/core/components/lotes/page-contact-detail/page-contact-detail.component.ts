@@ -63,7 +63,7 @@ export class PageContactDetailComponent implements OnInit {
 		private chdr: ChangeDetectorRef,
 		private router: Router,
 		private configGeneralesService: ConfigGeneralesService,
-		private socketService: StreamingService,
+		// private socketService: StreamingService,
 		private sanitizer: DomSanitizer
 	) {
 		this.peer = new Peer({
@@ -78,11 +78,7 @@ export class PageContactDetailComponent implements OnInit {
 		});
 	}
 	ngOnInit(): void {
-
-		this.socketService.onStreamStarted((data: any) => {
-			console.log('Transmisión iniciada por el host:', data.peerId);
-			this.connectToHost(data.peerId);
-		});
+		this.loadTransmition();
 		this.load();
 		this.createForm();
 		this.loadConfigs();
@@ -122,6 +118,29 @@ export class PageContactDetailComponent implements OnInit {
 
 	}
 
+	loadTransmition(): void {
+
+		// this.socketService.onStreamStarted((data: any) => {
+		// 	console.log('Transmisión en proceso por el host:', data.id);
+		// 	this.connectToHost(data.id);
+		//   });
+
+		//   this.socketService.stopStream((data: any) => {
+		// 	console.log('Transmisión detenida por el host:');
+		// 	// this.inStreaming = false;
+		// 	this.videoElement.srcObject = null;
+		//   });
+
+		const url = new URL(environment.MERCURE_URL);
+		url.searchParams.append('topic', 'transmition');
+		const eventSource = new EventSource(url.toString());
+		eventSource.onmessage = e => {
+			console.log(e.data)
+			this.connectToHost(JSON.parse(e.data)s);
+			this.chdr.detectChanges();
+		};
+	}
+
 	async connectToHost(hostPeerId: string) {
 		const stm2 = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
 		const call = this.peer.call(hostPeerId, stm2); // No necesitas pasar `this.stream`\
@@ -145,9 +164,15 @@ export class PageContactDetailComponent implements OnInit {
 			this.hola();
 			this.createForm();
 			const url = new URL(environment.MERCURE_URL);
+			// Agrega el token JWT como parámetro de consulta
+			// const token = 'tu_token_jwt_aqui'; // Obtén este token de tu backend
+			// url.searchParams.append('authorization', token);
 			url.searchParams.append('topic', this.topicSubasta);
 			const eventSource = new EventSource(url.toString());
 			eventSource.onmessage = e => {
+				debugger
+				console.log(e, 'prueba');
+				
 				const data = JSON.parse(e.data);
 				if (data.accion === 'puja') {
 					this.loadDetalles();

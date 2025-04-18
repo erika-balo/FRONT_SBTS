@@ -69,6 +69,8 @@ const routes: Routes = [
       { path: 'enlace/:slug', component: PageComponent },
       { path: 'lotes/page-contact-detail', component: PageContactDetailComponent },
       { path: 'historial-eventos', component: HistorialEventosComponent },
+      { path: 'production', component: StreamingComponent, data: { roles: ['ROLE_PRODUCTION'] }, canActivate: [AuthGuard, RolesGuard],
+      },
     ]
   },
   {

@@ -11,7 +11,13 @@ export class StreamingService {
   private socket: Socket;
 
   constructor() {
-    this.socket = io(environment.STREAM_SERVER); // Conectar al servidor de Express
+
+    this.socket = io('wss://127.0.0.1:3000', {  // Cambia ws:// a http:// 
+      path: '/socket.io',  // Usa http en lugar de wss
+      secure: false,  // Asegúrate que está en false para desarrollo
+      rejectUnauthorized: false,  // Solo para desarrollo
+      transports: ['websocket']
+    });
   }
 
   // Escuchar eventos del servidor

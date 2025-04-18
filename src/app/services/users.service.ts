@@ -19,8 +19,13 @@ export class UsersService {
         return this.http.post(this.resourceUrl + '/register', params, { observe: 'response' });
     }
     
+    
     me(): Observable<any> {
         return this.http.get(this.resourceUrl + '/me', { observe: 'response' });
+    }
+
+    mercureAdvice(topic, data): Observable<any> {
+        return this.http.get(this.resourceUrl + `/mercure-advice/${topic}/${data}`, { observe: 'response' });
     }
 
     getAllUsers(page: number, limit: number, req?: any): Observable<any> {

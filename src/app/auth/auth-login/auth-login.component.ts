@@ -68,7 +68,7 @@ export class AuthLoginComponent implements OnInit, OnDestroy {
 				if (this.redirectUrl) {
 					this.router.navigate([this.redirectUrl]);
 				} else {
-					const isUser = user.roles.indexOf('ROLE_USER') >= 0;
+					const isUser = user.roles.indexOf('ROLE_USER') >= 0 || user.roles.indexOf('ROLE_PRODUCTION') >= 0;
 					if (isUser) {
 						this.router.navigate(['/']);
 					} else {

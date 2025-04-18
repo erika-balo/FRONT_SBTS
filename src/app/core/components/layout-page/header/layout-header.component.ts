@@ -18,6 +18,7 @@ export class LayoutHeaderComponent implements OnInit, OnDestroy {
 
   isAdmin: boolean;
   isSubasta: boolean;
+  isProduction: boolean;
   isUser: boolean;
 
   private _unsubscribeAll: Subject<any>;
@@ -35,6 +36,8 @@ export class LayoutHeaderComponent implements OnInit, OnDestroy {
   isCondensed = false;
 
   ngAfterViewInit() {
+    console.log('ngAfterViewInit');
+    
     this._activateMenuDropdown();
   }
 
@@ -45,7 +48,7 @@ export class LayoutHeaderComponent implements OnInit, OnDestroy {
         takeUntil(this._unsubscribeAll),
         select(currentUser),
         filter(user => user)
-    ).subscribe(user => {
+    ).subscribe(user => {        
         this.isAdmin = user.roles.indexOf('ROLE_ADMIN') >= 0;
         this.isSubasta = user.roles.indexOf('ROLE_SUBASTA') >= 0;
         this.isUser = user.roles.indexOf('ROLE_USER') >= 0;

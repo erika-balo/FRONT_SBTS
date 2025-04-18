@@ -4,9 +4,9 @@
 export const environment = {
     production: false,
     API_URL: 'https://api.digitalganadera.com',
-    MERCURE_URL: 'http://localhost:9000/.well-known/mercure',
+    MERCURE_URL: 'https://mercure.digitalganadera.com/.well-known/mercure',
     URL_IMAGENES: 'http://localhost',
-    STREAM_SERVER: 'https://streaming.digitalganadera.com/socket.io'
+    STREAM_SERVER: 'https://streaming.digitalganadera.com'
 };
 /*
  * For easier debugging in development mode, you can import the following file
