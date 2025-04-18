@@ -21,6 +21,7 @@ import Peer from 'peerjs';
 export class PageContactDetailComponent implements OnInit {
 
 	resourceUrl = environment.URL_IMAGENES;
+	inStreaming = false;
 	/*variables inicio*/
 	diferenciaMinimaOferta: number;
 	proximaMinimaOferta: number;
@@ -120,23 +121,18 @@ export class PageContactDetailComponent implements OnInit {
 
 	loadTransmition(): void {
 
-		// this.socketService.onStreamStarted((data: any) => {
-		// 	console.log('Transmisión en proceso por el host:', data.id);
-		// 	this.connectToHost(data.id);
-		//   });
-
-		//   this.socketService.stopStream((data: any) => {
-		// 	console.log('Transmisión detenida por el host:');
-		// 	// this.inStreaming = false;
-		// 	this.videoElement.srcObject = null;
-		//   });
-
 		const url = new URL(environment.MERCURE_URL);
 		url.searchParams.append('topic', 'transmition');
 		const eventSource = new EventSource(url.toString());
 		eventSource.onmessage = e => {
 			console.log(e.data)
-			this.connectToHost(JSON.parse(e.data));
+			const id =JSON.parse(e.data)
+			if(id === 'close') {
+				this.inStreaming = false;
+			} else {
+				this.inStreaming = true;
+				this.connectToHost(id);
+			}
 			this.chdr.detectChanges();
 		};
 	}
@@ -170,7 +166,6 @@ export class PageContactDetailComponent implements OnInit {
 			url.searchParams.append('topic', this.topicSubasta);
 			const eventSource = new EventSource(url.toString());
 			eventSource.onmessage = e => {
-				debugger
 				console.log(e, 'prueba');
 				
 				const data = JSON.parse(e.data);
@@ -259,7 +254,10 @@ export class PageContactDetailComponent implements OnInit {
 			const data = response.body;
 			console.log(data);
 			data.forEach(dt => {
-				debugger
+				if(dt.slug === 'LAST_ID_TRANSMITION' && dt.valor !== '0') {
+					this.inStreaming = true;
+					this.connectToHost(dt.valor);
+				}
 				if (dt.slug === 'LINK_VIDEOS') {
 					this.linkVideos = dt.valor;
 					const yu = 'https://www.youtube.com/embed/';

@@ -3,6 +3,7 @@ import { StreamingService } from "app/services";
 import { environment } from "environments/environment";
 import Peer from "peerjs";
 import { UsersService } from '../../../services/users.service';
+import { ConfigGeneralesService } from '../../../services/config-generales.service';
 
 @Component({
     selector: 'app-streaming',
@@ -13,6 +14,7 @@ export class StreamingComponent implements OnInit {
 
     private peer: Peer;
     private stream: MediaStream | null = null;
+    idTransmition = '';
 
 
     videoDevices: MediaDeviceInfo[] = [];
@@ -22,6 +24,7 @@ export class StreamingComponent implements OnInit {
 
     constructor(
         // private socketService: StreamingService,
+        private configGeneralesService: ConfigGeneralesService,
         public UsersService: UsersService
     ) { 
             this.peer = new Peer({
@@ -115,10 +118,17 @@ export class StreamingComponent implements OnInit {
             //     videoElement.srcObject = this.stream;
             // }
     
+            this.idTransmition = this.peer.id;
+            this.configGeneralesService.edit(17, { valor: this.idTransmition }).subscribe((res) => {
+              console.log(res);
+            }, err => {
+              console.log(err);
+            });
+
             this.isStreaming = true;
-            this.UsersService.mercureAdvice('transmition', this.peer.id).subscribe((res) => {
-                console.log(res);
-            }
+              this.UsersService.mercureAdvice('transmition', this.peer.id).subscribe((res) => {
+                  console.log(res);
+              }
             );
             // this.socketService.startStream({ peerId: this.peer.id });
         } catch (error) {
@@ -130,12 +140,23 @@ export class StreamingComponent implements OnInit {
     stopStream() {
         // Detener el envío del stream a otros peers, pero no detener el stream local
         if (this.peer) {
-            this.peer.disconnect(); // Esto corta la conexión de Peer pero no el stream local
+            // this.peer.disconnect(); // Esto corta la conexión de Peer pero no el stream local
             console.log('Se ha detenido la transmisión a otros usuarios');
         }
     
         // No tocamos el stream local ni el video, ya que queremos que siga visible
         this.isStreaming = false;
+        this.configGeneralesService.edit(17, { valor: '0' }).subscribe((res) => {
+          console.log(res);
+          
+        }, err => {
+          console.log(err);
+        });
+
+        
+        this.UsersService.mercureAdvice('transmition', 'close').subscribe((res) => {
+          console.log(res);
+        });
     
         // Detener la transmisión en el servidor (si es necesario)
         // if (this.socketService) {
