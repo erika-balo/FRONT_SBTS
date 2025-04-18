@@ -136,7 +136,7 @@ export class PageContactDetailComponent implements OnInit {
 		const eventSource = new EventSource(url.toString());
 		eventSource.onmessage = e => {
 			console.log(e.data)
-			this.connectToHost(JSON.parse(e.data)s);
+			this.connectToHost(JSON.parse(e.data));
 			this.chdr.detectChanges();
 		};
 	}
